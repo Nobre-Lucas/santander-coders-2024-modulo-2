@@ -384,6 +384,7 @@ views_schema = {
         WITH income_separation AS (
             SELECT 
                 household_id,
+                vehicles,
                 income,
                 CASE 
                     WHEN income ILIKE '%Has no income%' THEN NULL
@@ -400,6 +401,7 @@ views_schema = {
         SELECT 
             p.person_id,
             p.household_id,
+            i.vehicles,
             ROUND((i.min_income + i.max_income) / 2, 2) AS AVG_INCOME
         FROM MAIN.ADA.DIM_PERSON p
         JOIN income_separation i ON i.household_id = p.household_id
