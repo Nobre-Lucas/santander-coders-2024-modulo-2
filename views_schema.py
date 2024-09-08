@@ -352,5 +352,57 @@ views_schema = {
             FROM MAIN.ADA.TRIP_TYPE_BY_COST        
             WHERE includes_collective_transportation = 1
             ;
-        '''
+        ''',
+
+    'view_trip_type_by_person' : '''
+        CREATE OR REPLACE VIEW MAIN.ADA.TRIP_TYPE_BY_PERSON AS
+        SELECT DISTINCT 
+            p.age, 
+            p.gender,
+            p.education_level,
+            h.income,
+            CASE t.mode_type
+                WHEN 'IT_private' THEN 'Individual Transport Private'
+                WHEN 'CT_public' THEN 'Collective Transport Public'
+                WHEN 'CT_private' THEN 'Collective Transport Private'
+                WHEN 'AM_walk' THEN 'Active Mobility Walk'
+                WHEN 'Other' THEN 'Other'
+                WHEN 'AM_bicycle' THEN 'Active Mobility Bicycle'
+                WHEN 'IT_public' THEN 'Individual Transport Public'
+                WHEN 'Combined' THEN 'Combined'
+                ELSE ''
+            END AS mode_type,
+            COUNT(t.trip_id) AS total_count
+        FROM MAIN.ADA.DIM_TRIP t
+        JOIN MAIN.ADA.DIM_PERSON p ON p.person_id = t.person_id
+        JOIN MAIN.ADA.DIM_HOUSEHOLD h ON h.household_id = t.household_id
+        GROUP BY 1,2,3,4,5
+        ;
+        ''',
+    'view_avg_family_income' : '''
+        CREATE OR REPLACE VIEW MAIN.ADA.AVG_FAMILY_INCOME AS
+        WITH income_separation AS (
+            SELECT 
+                household_id,
+                income,
+                CASE 
+                    WHEN income ILIKE '%Has no income%' THEN NULL
+                    ELSE TO_NUMBER(REPLACE(REGEXP_SUBSTR(income, '[0-9,.]+'), ',', '')) 
+                END AS min_income,
+                CASE 
+                    WHEN income ILIKE '%Has no income%' THEN NULL
+                    WHEN income ILIKE 'More than%' AND income ILIKE '%and less than%' THEN TO_NUMBER(REPLACE(REGEXP_SUBSTR(income, '[0-9,.]+', 1, 2), ',', ''))
+                    WHEN income ILIKE '%or less%' THEN TO_NUMBER(REPLACE(REGEXP_SUBSTR(income, '[0-9,.]+'), ',', ''))
+                    ELSE TO_NUMBER(REPLACE(REGEXP_SUBSTR(income, '[0-9,.]+', 1, 2), ',', ''))
+                END AS max_income
+            FROM MAIN.ADA.DIM_HOUSEHOLD
+        )
+        SELECT 
+            p.person_id,
+            p.household_id,
+            ROUND((i.min_income + i.max_income) / 2, 2) AS AVG_INCOME
+        FROM MAIN.ADA.DIM_PERSON p
+        JOIN income_separation i ON i.household_id = p.household_id
+        ;
+    '''
 }
