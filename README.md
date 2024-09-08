@@ -34,6 +34,9 @@ O conjunto de dados utilizado neste projeto faz parte da **Pesquisa de Mobilidad
 3. **Stage**: Detalhes de cada etapa do transporte durante uma viagem.
 4. **Trip**: Informações sobre as viagens realizadas pelos entrevistados.
 
+![image](https://github.com/user-attachments/assets/9c6b80d1-113d-4c87-a0cd-11d09690137c)
+
+
 Os dados brutos foram baixados e processados em notebooks Python, e posteriormente transformados e carregados no Snowflake.
 
 Link da API Kaggle:
