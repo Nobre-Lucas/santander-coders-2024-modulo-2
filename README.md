@@ -1,5 +1,8 @@
 # Pesquisa de Mobilidade Urbana no Distrito Federal (Brasil) - Documentação do Projeto
 
+![image](https://github.com/user-attachments/assets/88b7d5bc-7805-4623-a184-9403eef8cf0f)
+
+
 ## Visão Geral
 Este projeto tem como objetivo analisar dados de mobilidade urbana do Distrito Federal, Brasil. O conjunto de dados foi obtido por meio da API do Kaggle, transformado utilizando Python (seguindo os princípios da Programação Orientada a Objetos) e carregado no data warehouse Snowflake. Um aplicativo Streamlit foi criado para visualizar os dados diretamente do Snowflake, proporcionando uma interface amigável e facilitando a análise.
 
