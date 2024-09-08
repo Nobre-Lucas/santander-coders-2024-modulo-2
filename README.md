@@ -127,7 +127,8 @@ Uma API (Interface de Programação de Aplicações) permite que dois sistemas s
 │   └── main.ipynb                       # Notebook Jupyter para extração e chamada das outras classes
 │   └── logging.ipynb                    # Notebook Jupyter para printar as mensagens de logs
 │   └── snowflake_connection.ipynb       # Notebook Jupyter para estabelecer a conexão com o Snowflake
-│   └── create_table.ipynb               # Notebook Jupyter para criar as tabelas, caso não existam, no snowflake
+│   └── crete_views.ipynb                # Notebook Jupyter para criar as views no snowflake
+│   └── load_raw_table.ipynb             # Notebook Jupyter para carregamento dos dados brutos no Snowflake
 │   └── load_raw_table.ipynb             # Notebook Jupyter para carregamento dos dados brutos no Snowflake
 |
 ├── .env_example                         # Exemplo das variáveis de ambiente a serem salvas no arquivo .env
@@ -135,6 +136,8 @@ Uma API (Interface de Programação de Aplicações) permite que dois sistemas s
 ├── .gitignore                           # Arquivos e pastas não salvas no GitHub
 |
 ├── schema.py                            # Schema das tableas a serem criadas no Snowflake
+|
+├── views_schema.py                      # Dicionário contendo os DDL's de todas as views criadas
 │
 ├── app.py                               # Aplicativo Streamlit para visualização
 │
